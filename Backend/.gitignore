@@ -1,0 +1,39 @@
+# Entorno virtual de Python 
+venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Archivos de configuración del entorno
+.env
+*.env
+
+# Archivos de logs
+*.log
+
+# Configuración de IDEs
+.vscode/
+.idea/
+
+# Archivos de cobertura de tests
+htmlcov/
+.coverage
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Archivos de distribución
+*.egg-info/
+dist/
+build/
