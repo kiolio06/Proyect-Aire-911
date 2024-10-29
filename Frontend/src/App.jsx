@@ -1,12 +1,11 @@
-import React from "react";
-import GaleriaImagenes from "./galeria-imagenes"; // Asegúrate de que la ruta sea correcta
+import RegistroNeonMejoradoP from './RegistroNeonMejoradoP'
 
 function App() {
   return (
     <div className="App">
-      <GaleriaImagenes />
+      <RegistroNeonMejoradoP />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
