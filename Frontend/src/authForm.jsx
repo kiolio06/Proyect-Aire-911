@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 
-export default function AuthForm() { // Cambiar el nombre del componente aquí
+export default function Component() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { // Eliminar el tipo de evento
     e.preventDefault();
     setIsLoading(true);
     // Simular envío
