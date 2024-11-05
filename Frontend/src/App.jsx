@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './authForm';
-import About from './onboarding';
+// import InsightsSections from './InsightsSection'; Probando el apartado de InsightsSections !!!!!
 
 function App() {
   return (
