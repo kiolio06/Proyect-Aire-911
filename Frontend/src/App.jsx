@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 
+
 export default function AuthForm() { // Cambiar el nombre del componente aquí
   const [isLoading, setIsLoading] = useState(false);
 
