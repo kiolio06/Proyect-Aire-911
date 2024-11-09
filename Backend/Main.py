@@ -1,18 +1,23 @@
-from fastapi import FastAPI
+# main.py
 
-# Inicializar la aplicación de FastAPI
+from fastapi import FastAPI
+from exercises.controllers import router as exercises_router
+
 app = FastAPI()
 
+from fastapi import FastAPI
+
+app = FastAPI()
+
+# Rutas de otros módulos, como el router de ejercicios
+from exercises.controllers import router as exercises_router
+app.include_router(exercises_router, prefix="/exercises")
+
+# Ruta de la raíz
 @app.get("/")
-def read_root():
-    return {"message": "Bienvenido a FastAPI"}
+async def root():
+    return {"message": "Bienvenido a la API de recomendaciones de ejercicios"}
 
-# Ruta con parámetros (GET request)
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
 
-# Ruta para enviar datos usando POST request
-@app.post("/create-item/")
-def create_item(item: dict):
-    return {"item": item, "message": "Item creado con éxito"}
+# Incluye el router
+app.include_router(exercises_router, prefix="/exercises")
