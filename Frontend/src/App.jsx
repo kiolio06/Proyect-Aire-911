@@ -8,8 +8,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/onboarding" element={<About />} />  {}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/onboarding" element={<Onboarding />} /> 
+        <Route path="/onboarding" element={<AuthForm />} /> {}
       </Routes>
     </Router>
   );
