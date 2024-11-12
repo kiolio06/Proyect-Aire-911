@@ -7,9 +7,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AuthForm />} />
+        <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding" element={<Onboarding />} /> 
+        <Route path="/onboarding" element={<AuthForm />} /> {}
       </Routes>
     </Router>
   );
