@@ -7,7 +7,7 @@ def get_personalized_recommendations(user, exercise_types=None, duration=None, f
         Exercise(id=1, name="Meditación", instructions="Relájate y respira", benefits="Reduce el estrés", duration=10),
         Exercise(id=2, name="Visualización", instructions="Imagina un objetivo logrado", benefits="Incrementa motivación", duration=5)
     ]
-    # Filtra o ajusta las recomendaciones basadas en exercise_types, duration, y frequency si es necesario.
+    
     return recommendations
 
 
