@@ -7,6 +7,10 @@ class UserCreate(BaseModel):
     email: str
     password: str
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
 # Esquema para la respuesta del usuario
 class UserResponse(BaseModel):
     id: str
