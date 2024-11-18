@@ -1,0 +1,32 @@
+{
+    "tabs": {
+      "login": "Iniciar Sesión",
+      "register": "Registrarse"
+    },
+    "login": {
+      "title": "Bienvenido a MindTrain",
+      "description": "Entrena tu mente, transforma tu vida",
+      "email": "Email",
+      "password": "Contraseña",
+      "button": "Iniciar Sesión",
+      "loading": "Iniciando sesión...",
+      "forgot_password": "¿Olvidaste tu contraseña?"
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "description": "Únete a MindTrain hoy",
+      "name": "Nombre completo",
+      "email": "Email",
+      "password": "Contraseña",
+      "confirm_password": "Confirmar contraseña",
+      "button": "Crear cuenta",
+      "loading": "Creando cuenta..."
+    },
+    "messages": {
+      "password_mismatch": "Las contraseñas no coinciden.",
+      "register_success": "Registro exitoso",
+      "login_success": "Inicio de sesión exitoso",
+      "backend_error": "Hubo un problema con la solicitud."
+    }
+  }
+  
