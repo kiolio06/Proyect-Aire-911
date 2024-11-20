@@ -1,27 +1,34 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/Label";
 
-
-
 export default function Onboarding() {
     const [step, setStep] = useState(1);
     const [goals, setGoals] = useState([]);
     const [sessionLength, setSessionLength] = useState('');
-  
+    const navigate = useNavigate(); // Usa useNavigate para redirigir
+
     const handleGoalChange = (goal) => {
       setGoals(prev => 
         prev.includes(goal) ? prev.filter(g => g !== goal) : [...prev, goal]
       );
     };
-  
+
     const handleNext = () => {
-      if (step < 3) setStep(step + 1);
+      if (step < 3) {
+        setStep(step + 1);
+      } else {
+        localStorage.setItem('userPreferences', JSON.stringify({ goals, sessionLength }));
+        // Redirige al usuario al dashboard cuando llega al paso final
+        navigate('/dashboard');
+      }
     };
-  
+    
+
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-teal-100">
         <Card className="w-[400px]">
@@ -74,5 +81,4 @@ export default function Onboarding() {
         </Card>
       </div>
     );
-  }
-  
+}

@@ -1,25 +1,64 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
 
 export default function Component() {
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState(""); // Estado para mensajes de éxito o error
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const translations = {
+    en: {
+      login: "Login",
+      register: "Register",
+      welcomeTitle: "Welcome to MindTrain",
+      welcomeDescription: "Train your mind, transform your life",
+      forgotPassword: "Forgot your password?",
+      createAccount: "Create Account",
+      fullName: "Full Name",
+      email: "Email",
+      password: "Password",
+      confirmPassword: "Confirm Password",
+      loginBtn: "Login",
+      registerBtn: "Create Account",
+      loggingIn: "Logging in...",
+      registering: "Creating account...",
+    },
+    es: {
+      login: "Iniciar Sesión",
+      register: "Registrarse",
+      welcomeTitle: "Bienvenido a MindTrain",
+      welcomeDescription: "Entrena tu mente, transforma tu vida",
+      forgotPassword: "¿Olvidaste tu contraseña?",
+      createAccount: "Crear Cuenta",
+      fullName: "Nombre completo",
+      email: "Email",
+      password: "Contraseña",
+      confirmPassword: "Confirmar contraseña",
+      loginBtn: "Iniciar Sesión",
+      registerBtn: "Crear cuenta",
+      loggingIn: "Iniciando sesión...",
+      registering: "Creando cuenta...",
+    },
+  };
+
+  const userLanguage = navigator.language.slice(0, 2);
+  const language = translations[userLanguage] || translations.en;
 
   const handleSubmit = async (e, type) => {
     e.preventDefault();
     setIsLoading(true);
 
     const formData = {
-      name: e.target["register-name"].value,  // Cambié "nombre" por "name"
+      name: e.target["register-name"]?.value || "",
       email: e.target[type === "register" ? "register-email" : "email"].value,
       password: e.target[type === "register" ? "register-password" : "password"].value,
     };
 
-    // Si estás usando confirmación de contraseña, verifica que ambas coincidan
     if (type === "register") {
       const confirmPassword = e.target["register-confirm-password"].value;
       if (formData.password !== confirmPassword) {
@@ -30,7 +69,8 @@ export default function Component() {
     }
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/register`, {
+      const endpoint = type === "register" ? "/register" : "/login";
+      const response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -41,10 +81,10 @@ export default function Component() {
         setMessage(errorData.detail);
       } else {
         const data = await response.json();
-        setMessage("Registro exitoso: " + JSON.stringify(data));
+        localStorage.setItem("userName", data.user.name);
+        navigate("/onboarding");
       }
     } catch (error) {
-      console.error("Error al conectar con el backend:", error);
       setMessage("Hubo un problema con la solicitud.");
     } finally {
       setIsLoading(false);
@@ -55,70 +95,68 @@ export default function Component() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-teal-50 p-4">
       <Tabs defaultValue="login" className="w-full max-w-md">
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
-          <TabsTrigger value="register">Registrarse</TabsTrigger>
+          <TabsTrigger value="login">{language.login}</TabsTrigger>
+          <TabsTrigger value="register">{language.register}</TabsTrigger>
         </TabsList>
 
+        {/* Login */}
         <TabsContent value="login">
           <Card>
             <CardHeader>
-              <CardTitle>Bienvenido a MindTrain</CardTitle>
-              <CardDescription>Entrena tu mente, transforma tu vida</CardDescription>
+              <CardTitle>{language.welcomeTitle}</CardTitle>
+              <CardDescription>{language.welcomeDescription}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={(e) => handleSubmit(e, "login")} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{language.email}</Label>
                   <Input id="email" type="email" placeholder="correo@ejemplo.com" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="password">{language.password}</Label>
                   <Input id="password" type="password" placeholder="••••••••" required />
                 </div>
-                <Button type="submit" className="w-full bg-black hover:bg-gray-800" disabled={isLoading}>
-                  {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? language.loggingIn : language.loginBtn}
                 </Button>
-                <div className="text-sm text-center text-gray-500">
-                  <a href="#" className="hover:text-gray-800">¿Olvidaste tu contraseña?</a>
-                </div>
               </form>
             </CardContent>
           </Card>
         </TabsContent>
 
+        {/* Register */}
         <TabsContent value="register">
           <Card>
             <CardHeader>
-              <CardTitle>Crear Cuenta</CardTitle>
-              <CardDescription>Únete a MindTrain hoy</CardDescription>
+              <CardTitle>{language.createAccount}</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={(e) => handleSubmit(e, "register")} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="register-name">Nombre completo</Label>
+                  <Label htmlFor="register-name">{language.fullName}</Label>
                   <Input id="register-name" type="text" placeholder="Juan Pérez" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-email">Email</Label>
+                  <Label htmlFor="register-email">{language.email}</Label>
                   <Input id="register-email" type="email" placeholder="correo@ejemplo.com" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-password">Contraseña</Label>
+                  <Label htmlFor="register-password">{language.password}</Label>
                   <Input id="register-password" type="password" placeholder="••••••••" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-confirm-password">Confirmar contraseña</Label>
+                  <Label htmlFor="register-confirm-password">{language.confirmPassword}</Label>
                   <Input id="register-confirm-password" type="password" placeholder="••••••••" required />
                 </div>
-                <Button type="submit" className="w-full bg-black hover:bg-gray-800" disabled={isLoading}>
-                  {isLoading ? "Creando cuenta..." : "Crear cuenta"}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? language.registering : language.registerBtn}
                 </Button>
               </form>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
-      {message && <div className="text-center text-red-500 mt-4">{message}</div>} {/* Mensaje de estado */}
+      {message && <div className="text-center text-red-500 mt-4">{message}</div>}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 from exercises.models import Exercise
 import openai
 
-
 def get_personalized_recommendations(user, exercise_types=None, duration=None, frequency=None):
     try:
         # Verificar si el API key de OpenAI está disponible

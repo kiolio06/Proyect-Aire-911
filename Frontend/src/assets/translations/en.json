@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "login": {
+    "title": "Welcome back",
+    "description": "Enter your credentials",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login",
+    "forgot_password": "Forgot your password?"
+  },
+  "register": {
+    "title": "Create an account",
+    "description": "Enter your details",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "button": "Register"
+  },
+  "messages": {
+    "password_mismatch": "Passwords do not match",
+    "backend_error": "There was an error with the backend",
+    "login_success": "Login successful",
+    "register_success": "Registration successful"
+  }
+}
