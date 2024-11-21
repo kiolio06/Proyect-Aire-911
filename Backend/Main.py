@@ -9,10 +9,14 @@ from schemas import UserLogin
 # Inicializar la aplicación de FastAPI
 app = FastAPI()
 
+origins = [
+    "http://appmind.s3-website-us-east-1.amazonaws.com",
+]
+
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Cambia esto a tu frontend
+    allow_origins=origins,  # Cambia esto a tu frontend
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos
     allow_headers=["*"],  # Permitir todas las cabeceras
