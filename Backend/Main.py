@@ -9,14 +9,10 @@ from schemas import UserLogin
 # Inicializar la aplicación de FastAPI
 app = FastAPI()
 
-origins = [
-    "http://appmind.s3-website-us-east-1.amazonaws.com",
-]
-
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Cambia esto a tu frontend
+    allow_origins=["http://localhost:5173"],  # Cambia esto a tu frontend
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos
     allow_headers=["*"],  # Permitir todas las cabeceras
@@ -37,11 +33,13 @@ def create_item(item: dict):
 @app.get("/")
 async def check_connection():
     try:
-        client.admin.command("ping")
+        # Ahora `client` está importado desde `database.py`
+        client.admin.command('ping')
         return {"message": "Conexión a MongoDB exitosa"}
     except ConnectionFailure:
         raise HTTPException(status_code=500, detail="Error de conexión con la base de datos")
 
+# Registro de usuario
 @app.post("/register", response_model=UserResponse)
 async def register_user(user_create: UserCreate):
     # Verificar si el usuario ya existe
@@ -56,9 +54,9 @@ async def register_user(user_create: UserCreate):
     result = await collection.insert_one(user_create.dict())
     user_id = str(result.inserted_id)
 
-    # Responder con los datos del usuario creado
-    return {"id": user_id, "name": user_create.name, "email": user_create.email}
+    return UserResponse(id=user_id, name=user_create.name, email=user_create.email)
 
+# Inicio de sesión de usuario
 @app.post("/login")
 async def login_user(user_login: UserLogin):
     # Verificar si el usuario existe
