@@ -33,13 +33,11 @@ def create_item(item: dict):
 @app.get("/")
 async def check_connection():
     try:
-        # Ahora `client` está importado desde `database.py`
-        client.admin.command('ping')
+        client.admin.command("ping")
         return {"message": "Conexión a MongoDB exitosa"}
     except ConnectionFailure:
         raise HTTPException(status_code=500, detail="Error de conexión con la base de datos")
 
-# Registro de usuario
 @app.post("/register", response_model=UserResponse)
 async def register_user(user_create: UserCreate):
     # Verificar si el usuario ya existe
@@ -54,9 +52,9 @@ async def register_user(user_create: UserCreate):
     result = await collection.insert_one(user_create.dict())
     user_id = str(result.inserted_id)
 
-    return UserResponse(id=user_id, name=user_create.name, email=user_create.email)
+    # Responder con los datos del usuario creado
+    return {"id": user_id, "name": user_create.name, "email": user_create.email}
 
-# Inicio de sesión de usuario
 @app.post("/login")
 async def login_user(user_login: UserLogin):
     # Verificar si el usuario existe
@@ -64,4 +62,5 @@ async def login_user(user_login: UserLogin):
     if not user or not await verify_password(user_login.password, user["password"]):
         raise HTTPException(status_code=400, detail="Credenciales incorrectas.")
 
-    return {"message": "Inicio de sesión exitoso", "user": {"id": str(user["_id"]), "email": user["email"], "name": user["name"]}}
+    # Responder con los datos del usuario
+    return {"message": "Inicio de sesión exitoso", "user": {"id": str(user["_id"]), "name": user["name"], "email": user["email"]}}
